@@ -20,7 +20,7 @@ def test_geometry():
             [-1, 1, 1],
             [0, 0, 0],  # point in the center of it
         ],
-        dtype=np.float,
+        dtype=float,
     )
 
     cells = np.array(
@@ -38,7 +38,7 @@ def test_geometry():
             [8, 4, 0, 1],
             [3, 8, 0, 1],
         ],
-        dtype=np.int,
+        dtype=int,
     )
 
     facets = geo.get_facets(cells)
