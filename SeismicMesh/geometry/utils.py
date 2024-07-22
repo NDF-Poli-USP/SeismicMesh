@@ -156,6 +156,7 @@ def unique_rows(A, return_index=False, return_inverse=False):
     ncolumns = A.shape[1]
     dtype = np.dtype((np.character, orig_dtype.itemsize * ncolumns))
     B, I, J = np.unique(A.view(dtype), return_index=True, return_inverse=True)
+    J = J.flatten()
 
     B = B.view(orig_dtype).reshape((-1, ncolumns), order="C")
 

@@ -9,12 +9,12 @@ def test_ptin():
     # a perfect tetra
     points = np.array(
         [[0, 0, 0], [0, 1, 0], [np.sqrt(2), 0.5, 0], [0.5, 0.5, np.sqrt(2)]],
-        dtype=np.float,
+        dtype=float,
     )
 
     cells = np.array(
         [[0, 1, 2, 3]],
-        dtype=np.int,
+        dtype=int,
     )
 
     # test point if in tetraheadral
