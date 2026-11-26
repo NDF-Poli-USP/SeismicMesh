@@ -154,7 +154,7 @@ def unique_rows(A, return_index=False, return_inverse=False):
 
     orig_dtype = A.dtype
     ncolumns = A.shape[1]
-    dtype = np.dtype((np.character, orig_dtype.itemsize * ncolumns))
+    dtype = np.dtype(("S", orig_dtype.itemsize * ncolumns))
     B, I, J = np.unique(A.view(dtype), return_index=True, return_inverse=True)
     J = J.flatten()
 
@@ -598,7 +598,7 @@ def laplacian2(vertices, entities, max_iter=20, tol=0.01, verbose=1, pfix=None):
         ifix = np.asarray(ifix)
         bnd = np.concatenate((bnd, ifix))
 
-    W = np.sum(S, 1)
+    W = np.asarray(S.sum(axis=1)).reshape(-1, 1)
     if np.any(W == 0):
         print("Invalid mesh. Disjoint vertices found. Returning", flush=True)
         print(np.argwhere(W == 0), flush=True)
@@ -608,9 +608,8 @@ def laplacian2(vertices, entities, max_iter=20, tol=0.01, verbose=1, pfix=None):
         np.sum(np.square(vertices[edge[:, 0], :] - vertices[edge[:, 1], :]), axis=1)
     )
     L[L < eps] = eps
-    L = L[:, None]
     for it in range(max_iter):
-        pnew = np.divide(S * np.matrix(vertices), np.hstack((W, W)))
+        pnew = np.divide(S @ vertices, W)
         pnew[bnd, :] = vertices[bnd, :]
         vertices = pnew
         Lnew = np.sqrt(
